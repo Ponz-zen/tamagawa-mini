@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CLINIC ― 玉川ミニバスケットボールクラブ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Bebas+Neue&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #C8102E;
+  --red-dark: #9B0D23;
+  --red-light: #E8162E;
+  --white: #FFFFFF;
+  --off-white: #F8F6F3;
+  --light-gray: #F0EEEB;
+  --mid-gray: #E0DDD9;
+  --text: #1A1A1A;
+  --text-sub: #555550;
+  --text-light: #888880;
+  --gold: #B8963C;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ========== NAV ========== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--mid-gray);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 68px;
+  transition: box-shadow 0.3s;
+}
+nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+
+.nav-logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.nav-logo-mark img { width: 100%; height: 100%; object-fit: cover; }
+.nav-logo-text { line-height: 1.2; }
+.nav-logo-ja {
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+.nav-logo-en {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-light);
+}
+
+.nav-back {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-sub);
+  text-decoration: none;
+  border: 1.5px solid var(--mid-gray);
+  padding: 9px 20px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.nav-back:hover { color: var(--red); border-color: var(--red); }
+
+/* ========== HERO ========== */
+.hero {
+  margin-top: 68px;
+  min-height: calc(100vh - 68px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px 80px 96px;
+  background: #161616;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 82% 24%, rgba(200,16,46,0.30) 0%, transparent 68%),
+    radial-gradient(ellipse 50% 60% at 8% 90%, rgba(200,16,46,0.12) 0%, transparent 60%),
+    #161616;
+  z-index: 0;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 62px 62px;
+  mask-image: radial-gradient(ellipse at 72% 28%, black 18%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse at 72% 28%, black 18%, transparent 72%);
+}
+.hero-ghost {
+  position: absolute;
+  top: 46%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30vw;
+  line-height: 1;
+  color: rgba(255,255,255,0.035);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.hero-content { position: relative; z-index: 3; max-width: 1100px; margin: 0 auto; width: 100%; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 22px;
+  animation: fadeUp 0.9s ease both 0.2s;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 40px; height: 1px;
+  background: var(--red-light);
+}
+.hero-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(2.6rem, 6vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: 0.06em;
+  color: white;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+  animation: fadeUp 0.9s ease both 0.35s;
+}
+.hero-title em {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(4rem, 11vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--red-light);
+  margin-top: 8px;
+}
+.hero-sub {
+  margin-top: 28px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.7);
+  animation: fadeUp 0.9s ease both 0.5s;
+}
+
+/* date badge */
+.hero-date-badge {
+  position: absolute;
+  top: 50%; right: 0;
+  transform: translateY(-50%);
+  text-align: center;
+  border: 1.5px solid var(--red-light);
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(4px);
+  padding: 24px 34px;
+  z-index: 3;
+  animation: fadeIn 1s ease both 0.7s;
+}
+.hero-date-badge .month {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.28em;
+  color: var(--red-light);
+}
+.hero-date-badge .day {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  color: white;
+}
+.hero-date-badge .dow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(255,255,255,0.6);
+  margin-top: 4px;
+}
+
+/* ========== MARQUEE ========== */
+.marquee-wrap { background: var(--red); padding: 14px 0; overflow: hidden; }
+.marquee-inner {
+  display: inline-flex;
+  animation: marquee 22s linear infinite;
+  white-space: nowrap;
+}
+.marquee-item {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.9);
+  padding: 0 32px;
+}
+.marquee-sep { color: rgba(255,255,255,0.35); }
+
+/* ========== BUTTONS ========== */
+.btn-red {
+  background: var(--red);
+  color: white;
+  padding: 15px 36px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.btn-red:hover { background: var(--red-dark); transform: translateY(-2px); }
+.btn-outline-white {
+  border: 1.5px solid rgba(255,255,255,0.7);
+  color: white;
+  padding: 15px 36px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  display: inline-block;
+  backdrop-filter: blur(4px);
+}
+.btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+.btn-white {
+  background: white;
+  color: var(--red);
+  padding: 16px 44px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-white:hover { background: var(--off-white); transform: translateY(-2px); }
+
+.hero-btns {
+  margin-top: 40px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.9s ease both 0.62s;
+}
+
+/* ========== SECTIONS ========== */
+.section {
+  padding: 96px 80px;
+  border-top: 1px solid var(--mid-gray);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.section:nth-child(even) { background: var(--off-white); }
+.section.visible { opacity: 1; transform: none; }
+
+.section-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.section-label { position: sticky; top: 96px; }
+.section-label .en {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--red);
+  display: block;
+  line-height: 1;
+}
+.section-label .ja {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--text-sub);
+  margin-top: 8px;
+  display: block;
+}
+.section-label .dot {
+  display: block;
+  width: 28px; height: 2px;
+  background: var(--red);
+  margin-top: 18px;
+}
+
+/* info items */
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--mid-gray);
+}
+.info-item:first-child { padding-top: 0; }
+.info-item:last-child { border-bottom: none; }
+.info-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: var(--red);
+}
+.info-value {
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text);
+}
+
+/* big date */
+.big-date {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1;
+  color: var(--red);
+  letter-spacing: 0.02em;
+}
+.big-date small {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1rem;
+  color: var(--text-sub);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin-left: 14px;
+}
+.time-note {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+}
+
+/* map link */
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--red);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-top: 16px;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: border-color 0.3s;
+}
+.map-link:hover { border-color: var(--red); }
+.map-link svg { width: 15px; height: 15px; }
+
+/* tickets */
+.ticket-list { display: flex; flex-direction: column; gap: 16px; }
+.ticket-card {
+  border: 1px solid var(--mid-gray);
+  background: var(--white);
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.ticket-card:hover {
+  border-color: var(--red);
+  box-shadow: 0 8px 28px rgba(200,16,46,0.08);
+  transform: translateY(-2px);
+}
+.ticket-name { font-size: 0.98rem; font-weight: 700; letter-spacing: 0.04em; }
+.ticket-note { font-size: 0.7rem; color: var(--text-light); margin-top: 5px; letter-spacing: 0.05em; }
+.ticket-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.6rem;
+  letter-spacing: 0.04em;
+  color: var(--red);
+}
+.ticket-price small {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-light);
+  margin-right: 4px;
+}
+
+/* belongings */
+.item-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.item-tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--mid-gray);
+  background: var(--white);
+  padding: 8px 16px;
+  color: var(--text-sub);
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s, color 0.2s;
+}
+.item-tag:hover { border-color: var(--red); color: var(--red); }
+
+/* eligibility highlight */
+.big-target {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+/* SNS */
+.sns-list { display: flex; gap: 14px; flex-wrap: wrap; }
+.sns-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-sub);
+  text-decoration: none;
+  border: 1.5px solid var(--mid-gray);
+  padding: 11px 22px;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.sns-btn:hover { color: var(--red); border-color: var(--red); transform: translateY(-2px); }
+.sns-btn svg { width: 16px; height: 16px; }
+.sns-lead { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 22px; line-height: 1.9; }
+
+/* terms */
+.terms-box {
+  background: var(--white);
+  border: 1px solid var(--mid-gray);
+  border-left: 3px solid var(--red);
+  padding: 30px 34px;
+}
+.terms-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+.terms-list li {
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  padding-left: 20px;
+  position: relative;
+  letter-spacing: 0.02em;
+  line-height: 1.85;
+}
+.terms-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 13px;
+  width: 10px; height: 2px;
+  background: var(--red);
+}
+
+/* ========== CTA (mission style) ========== */
+.cta-section {
+  background: var(--red);
+  padding: 110px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: 'APPLY';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24vw;
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.cta-label {
+  position: relative;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.cta-label::before, .cta-label::after {
+  content: '';
+  width: 24px; height: 1px;
+  background: rgba(255,255,255,0.4);
+  display: inline-block;
+}
+.cta-heading {
+  position: relative;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 700;
+  color: white;
+  line-height: 1.4;
+  margin-bottom: 40px;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background: #1A1A1A;
+  color: white;
+  padding: 56px 80px 36px;
+}
+.footer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-logo {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: white;
+  text-decoration: none;
+}
+.footer-logo span { color: var(--red-light); }
+.footer-right { display: flex; align-items: center; gap: 28px; }
+.footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.35); letter-spacing: 0.04em; }
+.footer-red-stripe { display: flex; gap: 4px; }
+.footer-red-stripe .stripe { width: 24px; height: 3px; background: var(--red); }
+.footer-red-stripe .stripe:nth-child(2) { opacity: 0.5; }
+.footer-red-stripe .stripe:nth-child(3) { opacity: 0.25; }
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .hero, .section, .cta-section, footer { padding-left: 40px; padding-right: 40px; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 16px; height: 56px; }
+  .nav-logo-ja { font-size: 0.75rem; }
+  .nav-logo-en { font-size: 0.62rem; }
+  .nav-back { padding: 7px 14px; font-size: 0.7rem; }
+
+  .hero { margin-top: 56px; min-height: auto; padding: 64px 20px 72px; }
+  .hero-date-badge { display: none; }
+  .hero-ghost { font-size: 44vw; }
+  .hero-title em { font-size: clamp(3.4rem, 18vw, 6rem); }
+
+  .section { padding: 56px 20px; }
+  .section-inner { grid-template-columns: 1fr; gap: 28px; }
+  .section-label { position: static; }
+  .section-label .dot { display: none; }
+  .section-label .en { font-size: 1.3rem; }
+
+  .ticket-card { padding: 18px 20px; }
+  .ticket-price { font-size: 2.1rem; }
+
+  .cta-section { padding: 72px 20px; }
+  footer { padding: 40px 20px 28px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 480px) {
+  .hero-eyebrow { font-size: 0.64rem; letter-spacing: 0.2em; }
+  .big-date { font-size: clamp(2.6rem, 14vw, 4rem); }
+}
+</style>
+</head>
+<body>
+
+<!-- ========== NAV ========== -->
+<nav id="main-nav">
+  <a href="index.html" class="nav-logo-wrap">
+    <div class="nav-logo-mark"><img src="images/image_001.jpg" alt="" onerror="this.style.display='none'"></div>
+    <div class="nav-logo-text">
+      <div class="nav-logo-ja">玉川ミニバスケットボールクラブ</div>
+      <div class="nav-logo-en">TAMAGAWA MINI BASKETBALL CLUB</div>
+    </div>
+  </a>
+  <a href="index.html" class="nav-back">← トップへ戻る</a>
+</nav>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ghost">CLINIC</div>
+
+  <div class="hero-date-badge">
+    <div class="month">JUNE 2025</div>
+    <div class="day">27</div>
+    <div class="dow">SATURDAY</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">TAMAGAWA MINI BASKETBALL</div>
+    <h1 class="hero-title">バスケットボール クリニック<em>CLINIC 2025</em></h1>
+    <p class="hero-sub">小学生・中学生対象 ／ プロOBによる直接指導</p>
+    <div class="hero-btns">
+      <a href="tamagawa-mini-basketball/index.html#contact" class="btn-red">参加申し込み</a>
+      <a href="#info" class="btn-outline-white">開催情報を見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MARQUEE ========== -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="marquee-item">OB CLINIC 2025</span><span class="marquee-item marquee-sep">／</span>
+    <span class="marquee-item">小学生・中学生対象</span><span class="marquee-item marquee-sep">／</span>
+    <span class="marquee-item">プロOBが直接指導</span><span class="marquee-item marquee-sep">／</span>
+    <span class="marquee-item">愛知バスケ王国の次世代へ</span><span class="marquee-item marquee-sep">／</span>
+    <span class="marquee-item">OB CLINIC 2025</span><span class="marquee-item marquee-sep">／</span>
+    <span class="marquee-item">小学生・中学生対象</span><span class="marquee-item marquee-sep">／</span>
+    <span class="marquee-item">プロOBが直接指導</span><span class="marquee-item marquee-sep">／</span>
+    <span class="marquee-item">愛知バスケ王国の次世代へ</span><span class="marquee-item marquee-sep">／</span>
+  </div>
+</div>
+
+<!-- ========== EVENT DATE ========== -->
+<section class="section" id="info">
+  <div class="section-inner">
+    <div class="section-label">
+      <span class="en">EVENT INFO.</span>
+      <span class="ja">開催情報</span>
+      <span class="dot"></span>
+    </div>
+    <div class="section-content">
+      <div class="info-item">
+        <span class="info-label">DATE / 開催日</span>
+        <div class="big-date">6.27<small>土曜日</small></div>
+      </div>
+      <div class="info-item">
+        <span class="info-label">TIME / 時間</span>
+        <div class="info-value">詳細は追って公開予定</div>
+        <p class="time-note">※ 受付開始時間・終了時間は確定次第お知らせします</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ELIGIBILITY ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">
+      <span class="en">ELIGIBILITY.</span>
+      <span class="ja">対象</span>
+      <span class="dot"></span>
+    </div>
+    <div class="section-content">
+      <div class="info-item">
+        <span class="info-label">対象者</span>
+        <div class="big-target">小学生・中学生</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PLACE ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">
+      <span class="en">PLACE.</span>
+      <span class="ja">会場</span>
+      <span class="dot"></span>
+    </div>
+    <div class="section-content">
+      <div class="info-item">
+        <span class="info-label">VENUE / 会場名</span>
+        <div class="info-value">詳細は追って公開予定</div>
+      </div>
+      <div class="info-item">
+        <span class="info-label">ADDRESS / 住所</span>
+        <div class="info-value">—</div>
+        <a href="https://maps.google.com" target="_blank" rel="noopener" class="map-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          GOOGLE MAP で見る
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TICKETS ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">
+      <span class="en">TICKETS.</span>
+      <span class="ja">参加料金</span>
+      <span class="dot"></span>
+    </div>
+    <div class="section-content">
+      <div class="ticket-list">
+        <div class="ticket-card">
+          <div>
+            <div class="ticket-name">一般参加</div>
+          </div>
+          <div class="ticket-price"><small>¥</small>3,000</div>
+        </div>
+        <div class="ticket-card">
+          <div>
+            <div class="ticket-name">特別観覧席</div>
+            <div class="ticket-note">10名限定</div>
+          </div>
+          <div class="ticket-price"><small>¥</small>5,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BELONGINGS ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">
+      <span class="en">ITEMS.</span>
+      <span class="ja">持ち物</span>
+      <span class="dot"></span>
+    </div>
+    <div class="section-content">
+      <div class="item-tags">
+        <span class="item-tag">マイボール</span>
+        <span class="item-tag">バスケットボールシューズ</span>
+        <span class="item-tag">タオル</span>
+        <span class="item-tag">運動できる服装</span>
+        <span class="item-tag">水分補給できるもの</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SNS ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">
+      <span class="en">SNS.</span>
+      <span class="ja">公式アカウント</span>
+      <span class="dot"></span>
+    </div>
+    <div class="section-content">
+      <p class="sns-lead">最新情報はSNSで随時発信しています。フォローしてお見逃しなく。</p>
+      <div class="sns-list">
+        <a href="#" class="sns-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+          </svg>
+          INSTAGRAM
+        </a>
+        <a href="#" class="sns-btn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          X (TWITTER)
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TERMS ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">
+      <span class="en">TERMS.</span>
+      <span class="ja">参加規約</span>
+      <span class="dot"></span>
+    </div>
+    <div class="section-content">
+      <div class="terms-box">
+        <ul class="terms-list">
+          <li>参加者は本クリニックの規約に同意の上、お申し込みください。</li>
+          <li>怪我・事故等については、主催者は責任を負いかねます。各自の責任のもとでご参加ください。</li>
+          <li>悪天候・その他やむを得ない事情により、イベントが中止・変更となる場合があります。</li>
+          <li>お申し込み後のキャンセルは原則お受けできません。あらかじめご了承ください。</li>
+          <li>会場内での写真・動画撮影は、他の参加者のプライバシーに配慮して行ってください。</li>
+          <li>主催者が撮影する写真・動画は、SNSや広報素材に使用される場合があります。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta-section">
+  <div class="cta-label">SIGN UP</div>
+  <h2 class="cta-heading">参加申し込みは<br>こちらから</h2>
+  <a href="tamagawa-mini-basketball/index.html#contact" class="btn-white">参加申し込みフォームへ →</a>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">玉川<span>ミニ</span>バスケットボールクラブ</a>
+    <div class="footer-right">
+      <div class="footer-copy">© 2026 玉川ミニバスケットボールクラブ OB会. All rights reserved.</div>
+      <div class="footer-red-stripe">
+        <div class="stripe"></div><div class="stripe"></div><div class="stripe"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+
+// Scroll reveal for sections
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
