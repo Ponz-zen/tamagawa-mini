@@ -890,6 +890,26 @@ footer {
   transition: color 0.2s;
 }
 .footer-col a:hover { color: white; }
+
+/* footer SNS */
+.footer-social { display: flex; gap: 12px; }
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.6);
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+}
+.footer-social a:hover {
+  color: white;
+  border-color: var(--red);
+  background: var(--red);
+  transform: translateY(-2px);
+}
+.footer-social svg { width: 17px; height: 17px; }
+
 .footer-bottom {
   display: flex;
   justify-content: space-between;
@@ -1735,6 +1755,23 @@ footer {
           <li><a href="#contact">お問い合わせ</a></li>
           <li><a href="clinic.html">クリニック詳細・申込</a></li>
         </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SNS</h4>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/tamagawaminiob/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <a href="https://x.com/tamagawaob" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
     <div class="footer-bottom">
