@@ -1182,13 +1182,12 @@ footer {
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 12px 20px;
+  padding: 0;
 }
 .sponsor-logo-slot img {
   width: 100%;
-  height: auto;
-  max-height: 76px;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
@@ -1246,11 +1245,10 @@ footer {
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links" id="nav-links-list">
-    <li><a href="#about">クラブ紹介</a></li>
+    <li><a href="#clinic">クリニック</a></li>
     <li><a href="#gallery">ギャラリー</a></li>
     <li><a href="#players">OB選手</a></li>
-    <li><a href="#clinic">クリニック</a></li>
-    <li><a href="#history">歴史</a></li>
+    <li><a href="#about">クラブ紹介</a></li>
     <li><a href="#contact" class="nav-cta">参加・問い合わせ</a></li>
   </ul>
 </nav>
@@ -1322,7 +1320,7 @@ footer {
 </div>
 
 <!-- ========== TRUST STRIP ========== -->
-<div class="trust-strip" id="about">
+<div class="trust-strip">
   <div class="trust-item reveal">
     <div class="trust-num">1021<span class="trust-unit">勝</span></div>
     <div class="trust-label">通算勝利数 / 147敗</div>
@@ -1539,12 +1537,12 @@ footer {
   </div>
 </section>
 
-<!-- ========== HISTORY TIMELINE ========== -->
-<section class="history-section" id="history">
+<!-- ========== ABOUT (旧 HISTORY) ========== -->
+<section class="history-section" id="about">
   <div class="history-inner">
     <div class="reveal">
-      <div class="section-eyebrow">HISTORY</div>
-      <h2 class="section-title">玉川ミニバスの歩み</h2>
+      <div class="section-eyebrow">ABOUT</div>
+      <h2 class="section-title">クラブ紹介 — 玉川ミニバスの歩み</h2>
     </div>
     <div class="timeline">
       <div class="tl-item reveal">
@@ -1604,9 +1602,7 @@ footer {
     <div class="sponsor-tier reveal">
       <div class="sponsor-tier-label sponsor-tier-main">SPONSOR</div>
       <div class="sponsor-logos sponsor-logos--large">
-        <div class="sponsor-logo-slot"><a href="https://ascenders.co.jp/" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;padding:16px;"><img src="images/sponsor_ascenders.png" alt="Ascenders" style="width:100%;height:100%;object-fit:contain;"></a></div>
-        <div class="sponsor-logo-slot"><div class="sponsor-logo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="6" width="20" height="12" rx="1"/><path d="M2 10h20"/></svg><span>ロゴを配置</span></div></div>
-        <div class="sponsor-logo-slot"><div class="sponsor-logo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="6" width="20" height="12" rx="1"/><path d="M2 10h20"/></svg><span>ロゴを配置</span></div></div>
+        <div class="sponsor-logo-slot"><a href="https://ascenders.co.jp/" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;padding:0;"><img src="images/sponsor_ascenders.png" alt="Ascenders" style="width:100%;height:100%;object-fit:cover;"></a></div>
         <div class="sponsor-logo-slot"><div class="sponsor-logo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="6" width="20" height="12" rx="1"/><path d="M2 10h20"/></svg><span>ロゴを配置</span></div></div>
         <div class="sponsor-logo-slot"><div class="sponsor-logo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="6" width="20" height="12" rx="1"/><path d="M2 10h20"/></svg><span>ロゴを配置</span></div></div>
         <div class="sponsor-logo-slot"><div class="sponsor-logo-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="6" width="20" height="12" rx="1"/><path d="M2 10h20"/></svg><span>ロゴを配置</span></div></div>
@@ -1742,16 +1738,15 @@ footer {
       <div class="footer-col">
         <h4>MENU</h4>
         <ul>
-          <li><a href="#about">クラブ紹介</a></li>
+          <li><a href="#clinic">クリニック</a></li>
           <li><a href="#gallery">ギャラリー</a></li>
           <li><a href="#players">OB選手</a></li>
-          <li><a href="#clinic">クリニック</a></li>
+          <li><a href="#about">クラブ紹介</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>MORE</h4>
         <ul>
-          <li><a href="#history">クラブの歴史</a></li>
           <li><a href="#contact">お問い合わせ</a></li>
           <li><a href="clinic.html">クリニック詳細・申込</a></li>
         </ul>
@@ -1851,13 +1846,36 @@ const revealObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.08 });
 revealEls.forEach(el => revealObs.observe(el));
 
-// Gallery tabs
+// Gallery tabs（自動切り替え対応）
+const galleryTabBtns = Array.from(document.querySelectorAll('.gallery-tab'));
+let galleryTabIndex = 0;
+let galleryTabTimer = null;
+
 function switchTab(btn, tabId) {
   document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.gallery-pane').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById(tabId).classList.add('active');
+  galleryTabIndex = galleryTabBtns.indexOf(btn);
+  startGalleryAutoTab(); // 手動操作でタイマーをリセット
 }
+
+function nextGalleryTab() {
+  if (!galleryTabBtns.length) return;
+  galleryTabIndex = (galleryTabIndex + 1) % galleryTabBtns.length;
+  const btn = galleryTabBtns[galleryTabIndex];
+  document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.gallery-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const tabId = btn.getAttribute('onclick').match(/'([^']+)'\)$/)[1];
+  document.getElementById(tabId).classList.add('active');
+}
+
+function startGalleryAutoTab() {
+  clearInterval(galleryTabTimer);
+  galleryTabTimer = setInterval(nextGalleryTab, 6000);
+}
+startGalleryAutoTab();
 
 // Count-up animation for trust strip
 function animateCount(el, target, decimals=0, suffix='') {
